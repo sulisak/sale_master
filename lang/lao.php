@@ -459,7 +459,7 @@ $data['lang_mo'] = 'ເງິນ';
 $data['lang_discount_last'] = 'ຫຼຸດຈຳນວນເງິນ';
 $data['lang_dis'] = 'ຫຼຸດ';
 
-$data['lang_sumall'] = 'ຍອດທັ້ງໝົດ';
+$data['lang_sumall'] = 'ຍອດທັງໝົດ';
 $data['lang_payby'] = 'ຊຳລະໂດຍ';
 
 $data['lang_outofstock'] = 'ສິນຄ້າໝົດສະຕັອກແລ້ວ';

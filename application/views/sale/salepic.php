@@ -557,6 +557,9 @@ else {
 
                                             <?php } ?>
 
+
+
+
                                             <input type="hidden" ng-model="x.product_id">
 
                                         </td>
@@ -1119,7 +1122,7 @@ if($_SESSION['owner_vat_status']=='2'){
                                                         ?>
 
 
-                                                    <!-- <th><?=$lang_discountlast?></th>  -->
+                                                    <th><?=$lang_discountlast?></th>
                                                     <th><?=$lang_sumall?></th>
 
                                                     <th><?=$lang_day?></th>
@@ -1178,7 +1181,7 @@ if($_SESSION['owner_vat_status']=='2'){
 
 
 
-                                                    <!-- /* <td align="right">{{x.discount_last | number}}</td> */ -->
+                                                    <td align="right">{{x.discount_last | number}}</td>
                                                     <td align="right">
                                                         {{ParsefloatFunc(x.sumsale_price)  * (ParsefloatFunc(x.vat)/100) + ParsefloatFunc(x.sumsale_price) | number}}
                                                     </td>
@@ -1906,6 +1909,7 @@ pregetlistcus()" class="form-control" placeholder="<?php echo $lang_sp_42;?>"
                                             <th style="text-align: left;"><?=$lang_barcode?></th>
                                             <th style="text-align: left;"><?=$lang_productname?></th>
                                             <th style="text-align: right; width: 100px;"><?=$lang_saleprice?></th>
+                                            <th style="text-align: right; width: 100px;"><?=$lang_discountperunit?></th>
                                             <th style="text-align: right; width: 70px;"><?=$lang_qty?></th>
                                             <th style="text-align: center; width: 80px;"><?=$lang_unit?></th>
                                             <th style="text-align: right; width: 110px;"><?=$lang_priceall?></th>
@@ -1920,18 +1924,26 @@ pregetlistcus()" class="form-control" placeholder="<?php echo $lang_sp_42;?>"
                                             <td style="text-align: right;">
                                                 {{x.product_price | number:<?php echo $_SESSION['decimal_print']; ?>}}
                                             </td>
+                                            <td align="right" style="width:50px;">
+                                                {{x.product_price_discount | number:0:<?php echo $_SESSION['decimal_print']; ?>}}
+                                            </td>
                                             <td style="text-align: right;">{{x.product_sale_num | number}}</td>
                                             <td style="text-align: center;">{{x.product_unit_name}}</td>
-                                            <td style="text-align: right;">
+                                            <!-- <td style="text-align: right;">
                                                 {{(x.product_price * x.product_sale_num) | number:<?php echo $_SESSION['decimal_print']; ?>}}
+                                            </td> -->
+
+                                            <td align="right" style="width:50px;">
+                                                {{(x.product_price - x.product_price_discount) * x.product_sale_num | number:0:<?php echo $_SESSION['decimal_print']; ?>}}
                                             </td>
                                         </tr>
 
                                         <!-- Subtotal Row -->
                                         <tr>
-                                            <td colspan="4" style="text-align: right; font-weight: bold;"><?=$lang_all?>
+                                            <td colspan="5" style="text-align: right; font-weight: bold;"><?=$lang_all?>
                                             </td>
-                                            <td style="text-align: right; font-weight: bold;">{{sumsale_num | number}}
+                                            <td style="text-align: right; font-weight: bold;">
+                                                {{sumsale_num | number}}
                                             </td>
                                             <td></td>
                                             <td style="text-align: right; font-weight: bold;">
@@ -1947,13 +1959,13 @@ pregetlistcus()" class="form-control" placeholder="<?php echo $lang_sp_42;?>"
                                             </td>
                                         </tr>
                                         <tr ng-if="vat3!='0'">
-                                            <td colspan="6" style="text-align: right;"><?=$lang_pricebeforvat?></td>
+                                            <td colspan="7" style="text-align: right;"><?=$lang_pricebeforvat?></td>
                                             <td style="text-align: right; font-weight: bold;">
                                                 {{sumsalevat-(sumsalevat-sumsale_price) | number:<?php echo $_SESSION['decimal_print']; ?>}}
                                             </td>
                                         </tr>
                                         <tr ng-if="vat3!='0'">
-                                            <td colspan="6" style="text-align: right;"><?=$lang_pricesumvat?></td>
+                                            <td colspan="7" style="text-align: right;"><?=$lang_pricesumvat?></td>
                                             <td style="text-align: right; font-weight: bold;">
                                                 {{sumsalevat | number:<?php echo $_SESSION['decimal_print']; ?>}}</td>
                                         </tr>
@@ -1961,7 +1973,15 @@ pregetlistcus()" class="form-control" placeholder="<?php echo $lang_sp_42;?>"
 
                                         <!-- Grand Total -->
                                         <tr>
-                                            <td colspan="6" style="text-align: right; font-weight: bold;">
+                                            <td colspan="7" style="text-align: right; font-weight: bold;">
+                                                ສ່ວນຫຼຸດທ້າຍບີນ</td>
+                                            <td style="text-align: right; font-weight: bold;">
+                                                <u>{{discount_last2 | number:<?php echo $_SESSION['decimal_print']; ?>}}</u>
+                                            </td>
+
+                                        </tr>
+                                        <tr>
+                                            <td colspan="7" style="text-align: right; font-weight: bold;">
                                                 <?=$lang_sumall?></td>
                                             <td style="text-align: right; font-weight: bold;">
                                                 <u>{{sumsalevat-discount_last2 | number:<?php echo $_SESSION['decimal_print']; ?>}}</u>
@@ -1972,8 +1992,8 @@ pregetlistcus()" class="form-control" placeholder="<?php echo $lang_sp_42;?>"
 
                                         <!-- Payment Breakdown Rows -->
                                         <tr ng-repeat="y in getonepaylist">
-                                            <td colspan="6" style="text-align: right; font-weight: bold; border: none;">
-                                                {{y.pay_type_name}}
+                                            <td colspan="7" style="text-align: right; font-weight: bold; border: none;">
+                                                ລວມເປັນ=> {{y.pay_type_name}}:
                                             </td>
                                             <td style="text-align: right; font-weight: bold; border: none;">
                                                 {{y.money | number:<?php echo $_SESSION['decimal_print']; ?>}}
